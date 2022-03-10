@@ -1,4 +1,5 @@
 {
+  "project": "teste-adonis/tsconfig.json",
   "extends": ["plugin:adonis/typescriptApp", "prettier"],
   "plugins": ["prettier"],
   "rules": {
