@@ -5,8 +5,8 @@ export default class Notes extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').primary()
-      table.integer('user_id').unsigned().references('id').inTable('users')
+      table.string('id').primary()
+      table.string('user_id').references('id').inTable('users')
       table.string('title').notNullable()
       table.text('note', 'longtext').notNullable()
 

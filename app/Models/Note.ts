@@ -1,11 +1,17 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo, beforeCreate } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import { v4 as uuid } from 'uuid'
 
 export default class Note extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
-
+  public id: string
+  
+  @beforeCreate()
+  public static async createUUID (model:Note){
+    model.id = uuid()
+  }
+  
   @column()
   public title: string
 
