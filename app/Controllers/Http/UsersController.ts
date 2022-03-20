@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import { limpaCamposNulosDeObjeto } from 'App/Utils/Utils'
+import { UserValidatorStore, UserValidatorUpdate } from 'App/Validators/UserValidator'
 
 export default class UsersController {
   public async index() {
@@ -9,9 +11,11 @@ export default class UsersController {
   }
 
   public async store({ request }: HttpContextContract) {
-    const name = request.input('name')
-    const email = request.input('email')
-    const password = request.input('password')
+    const validateData = await request.validate(UserValidatorStore)
+
+    const name = validateData.name
+    const email = validateData.email
+    const password = validateData.password
 
     const user = await User.create({
       name,
@@ -22,10 +26,13 @@ export default class UsersController {
   }
 
   public async update({ params, request }) {
-    const user = await User.findOrFail(params.id)
-    const data = request.only(['name', 'email', 'password'])
+    const id = request.param('id')
+    if (!id) return
+    const validateData = await request.validate(UserValidatorUpdate)
 
-    user.merge(data)
+    const user = await User.findOrFail(params.id)
+
+    user.merge(limpaCamposNulosDeObjeto(validateData))
     await user.save()
 
     return user
