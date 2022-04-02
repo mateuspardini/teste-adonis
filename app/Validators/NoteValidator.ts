@@ -7,10 +7,12 @@ export class NoteValidatorStore {
   public schema = schema.create({
     title: schema.string({ trim: true }),
     note: schema.string({ trim: true }),
+    user_id: schema.string({ trim: true }),
   })
 
   public messages = {
-    string: 'O campo {{field}} deve ser uma string',
+    required: '{{ field }} is required',
+    string: '{{ field }} must be a string',
   }
 }
 export class NoteValidatorUpdate {
@@ -22,6 +24,6 @@ export class NoteValidatorUpdate {
   })
 
   public messages = {
-    string: 'O campo {{field}} deve ser uma string',
+    string: '{{ field }} must be a string',
   }
 }

@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Note from 'App/Models/Note'
 import { limpaCamposNulosDeObjeto } from 'App/Utils/Utils'
+import { schema } from '@ioc:Adonis/Core/Validator'
 import { NoteValidatorStore, NoteValidatorUpdate } from 'App/Validators/NoteValidator'
 
 export default class NotesController {
@@ -13,24 +14,22 @@ export default class NotesController {
   public async store({ request }: HttpContextContract) {
     const validateData = await request.validate(NoteValidatorStore)
 
-    const title = validateData.title
-    const note = validateData.note
-    const user_id = request.input('user_id')
+    const { title, note } = validateData
 
-    const noteData = await Note.create({
+    const noteModel = await Note.create({
       title,
       note,
-      user_id,
     })
-    return noteData
+    return noteModel
   }
 
-  public async update({ params, request }) {
+  public async update({ request }: HttpContextContract) {
     const id = request.param('id')
     if (!id) return
-    const validateData = await request.validate(NoteValidatorUpdate)
-    const note = await Note.findOrFail(params.id)
 
+    const validateData = await request.validate(NoteValidatorUpdate)
+
+    const note = await Note.findOrFail(id)
     note.merge(limpaCamposNulosDeObjeto(validateData))
     await note.save()
 

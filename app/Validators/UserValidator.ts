@@ -11,9 +11,9 @@ export class UserValidatorStore {
   })
 
   public messages = {
-    required: 'Digite um {{field}}',
-    email: 'Insira um email válido',
-    minLength: 'Insira {{options.minLength}} digitos em {{field}}',
+    required: '{{ field }} is required',
+    email: '{{ field }} must be a valid email',
+    minLength: '{{ field }} must be at least {{ #limit }} characters',
   }
 }
 export class UserValidatorUpdate {
@@ -26,7 +26,7 @@ export class UserValidatorUpdate {
   })
 
   public messages = {
-    email: 'Insira um email válido',
-    minLength: 'Insira {{options.minLength}} digitos em {{field}}',
+    email: '{{ field }} must be a valid email',
+    minLength: '{{ field }} must be at least {{ #limit }} characters',
   }
 }

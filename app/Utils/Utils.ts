@@ -6,6 +6,6 @@ export function limpaCamposNulosDeObjeto(objetoSujo: Object):Object {
         objetoLimpo[chave] = objetoSujo[chave]
       }
     })
-    console.log(objetoLimpo)
+
     return objetoLimpo
 }
